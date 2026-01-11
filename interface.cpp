@@ -1,10 +1,8 @@
-﻿#include "card_game.h"
+﻿#include "head.h"
 #include <iostream>
 #include <iomanip>
 #include <limits>
 using namespace std;
-
-// Вывод меню
 void menu() {
     cout << "\n";
     cout << "МЕНЮ: " << endl;
@@ -22,14 +20,12 @@ void menu() {
     cout << "Выберите пункт меню (1-10): ";
 }
 
-// Вывод карт игрока
 void printCards(const vector<Card>& cards, const string& player_name) {
     cout << player_name << " (" << cards.size() << " карт): ";
     
     if (cards.empty()) {
         cout << "нет карт";
     } else {
-        // Показываем только первые 5 карт для краткости
         for (size_t i = 0; i < min(cards.size(), static_cast<size_t>(5)); ++i) {
             cout << cardToString(cards[i]) << " ";
         }
@@ -41,14 +37,12 @@ void printCards(const vector<Card>& cards, const string& player_name) {
     cout << endl;
 }
 
-// Вывод текущего состояния игры
 void printGameState(const vector<Card>& player1, const vector<Card>& player2, int turn) {
     cout << "\n Текущее состояние игры (ход " << turn << ")" << endl;
     printCards(player1, "Игрок 1");
     printCards(player2, "Игрок 2");
 }
 
-// Вывод истории ходов
 void printTurnHistory(const vector<TurnRecord>& history) {
     if (history.empty()) {
         cout << "История ходов пуста." << endl;
@@ -60,16 +54,10 @@ void printTurnHistory(const vector<TurnRecord>& history) {
     cout << string(80, '-') << endl;
     
     for (const auto& record : history) {
-        cout << left << setw(5) << record.turn_number
-             << setw(15) << record.player1_card
-             << setw(15) << record.player2_card
-             << setw(15) << record.winner
-             << setw(15) << record.player1_cards_count
-             << setw(15) << record.player2_cards_count << endl;
+        cout << left << setw(5) << record.turn_number << setw(15) << record.player1_card << setw(15) << record.player2_card << setw(15) << record.winner << setw(15) << record.player1_cards_count << setw(15) << record.player2_cards_count << endl;
     }
 }
 
-// Функция для безопасного ввода числа
 int getValidatedInput(int min_val, int max_val) {
     int choice;
     while (true) {
@@ -86,9 +74,9 @@ int getValidatedInput(int min_val, int max_val) {
     }
 }
 
-// Функция для безопасного ввода строки
 string getStringInput() {
     string input;
     getline(cin, input);
     return input;
+
 }
