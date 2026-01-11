@@ -1,4 +1,4 @@
-﻿#include "card_game.h"
+﻿#include "head.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -94,3 +94,4 @@ bool saveTurnHistory(const vector<TurnRecord>& history, const string& filename) 
     cout << "История ходов сохранена в файл: " << filename << endl;
     return true;
 }
+
