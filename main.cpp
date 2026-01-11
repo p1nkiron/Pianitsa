@@ -1,26 +1,22 @@
-﻿#include "card_game.h"
+﻿#include "head.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <windows.h>
 using namespace std;
 
-// Глобальные переменные для состояния игры
 vector<Card> player1_cards;
 vector<Card> player2_cards;
 vector<Card> table_cards;
 vector<TurnRecord> turn_history;
 int current_turn = 0;
 bool game_active = false;
-
-// Прототипы функций из interface.cpp
 void menu();
 void printGameState(const vector<Card>& player1, const vector<Card>& player2, int turn);
 void printTurnHistory(const vector<TurnRecord>& history);
 int getValidatedInput(int min_val, int max_val);
 string getStringInput();
 
-// Инициализация новой игры
 void initializeNewGame() {
     vector<Card> deck;
     
@@ -37,7 +33,6 @@ void initializeNewGame() {
     printGameState(player1_cards, player2_cards, current_turn);
 }
 
-// Выполнение одного хода с интерфейсом
 void executeSingleTurn() {
     if (!game_active) {
         cout << "\nОшибка: игра не активна. Начните новую игру или загрузите существующую." << endl;
@@ -62,14 +57,11 @@ void executeSingleTurn() {
     cout << "Карт на столе: " << table_cards.size() << endl;
     
     printGameState(player1_cards, player2_cards, current_turn);
-    
-    // Проверка окончания игры
+
     if (checkGameEnd(player1_cards, player2_cards, current_turn)) {
         game_active = false;
     }
 }
-
-// Игра до завершения
 void playToEnd() {
     if (!game_active) {
         cout << "\nОшибка: игра не активна. Начните новую игру или загрузите существующую." << endl;
@@ -80,8 +72,7 @@ void playToEnd() {
     
     while (game_active && !checkGameEnd(player1_cards, player2_cards, current_turn)) {
         executeSingleTurn();
-        
-        // Ограничиваем вывод каждого хода для больших игр
+
         if (current_turn % 10 == 0 && current_turn > 0) {
             cout << "\nСыграно " << current_turn << " ходов. Продолжить автоматическую игру? (y/n): ";
             char choice;
@@ -93,8 +84,6 @@ void playToEnd() {
         }
     }
 }
-
-// Основная функция
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
@@ -105,11 +94,11 @@ int main() {
         int choice = getValidatedInput(1, 10);
         
         switch (choice) {
-            case 1: // Новая игра
+            case 1: 
                 initializeNewGame();
                 break;
                 
-            case 2: // Загрузить игру
+            case 2: 
                 {
                     cout << "Введите имя файла для загрузки: ";
                     string filename = getStringInput();
@@ -123,15 +112,15 @@ int main() {
                 }
                 break;
                 
-            case 3: // Сыграть один ход
+            case 3: 
                 executeSingleTurn();
                 break;
                 
-            case 4: // Сыграть до конца
+            case 4:
                 playToEnd();
                 break;
                 
-            case 5: // Показать состояние
+            case 5: 
                 if (game_active) {
                     printGameState(player1_cards, player2_cards, current_turn);
                 } else {
@@ -139,7 +128,7 @@ int main() {
                 }
                 break;
                 
-            case 6: // Сохранить игру
+            case 6: 
                 if (game_active) {
                     cout << "Введите имя файла для сохранения: ";
                     string filename = getStringInput();
@@ -149,11 +138,11 @@ int main() {
                 }
                 break;
                 
-            case 7: // Показать историю
+            case 7: 
                 printTurnHistory(turn_history);
                 break;
                 
-            case 8: // Сохранить историю
+            case 8: 
                 if (!turn_history.empty()) {
                     cout << "Введите имя файла для сохранения истории: ";
                     string filename = getStringInput();
@@ -163,7 +152,7 @@ int main() {
                 }
                 break;
                 
-            case 9: // Перераздать карты
+            case 9: 
                 if (game_active) {
                     char confirm;
                     cout << "\nВы уверены, что хотите перемешать и перераздать карты? (y/n): ";
@@ -177,7 +166,7 @@ int main() {
                 }
                 break;
                 
-            case 10: // Выход
+            case 10:
                 cout << "\nСпасибо за игру! До свидания!" << endl;
                 running = false;
                 break;
@@ -188,4 +177,5 @@ int main() {
     }
     
     return 0;
+
 }
