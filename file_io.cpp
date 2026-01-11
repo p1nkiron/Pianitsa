@@ -2,10 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
 using namespace std;
-
-// Сохранение игры в файл
 bool saveGame(const vector<Card>& player1, const vector<Card>& player2, const string& filename) {
     ofstream file(filename);
     
@@ -14,13 +11,11 @@ bool saveGame(const vector<Card>& player1, const vector<Card>& player2, const st
         return false;
     }
     
-    // Сохраняем карты первого игрока
     file << "Player1:" << player1.size() << endl;
     for (const auto& card : player1) {
         file << card.rank << " " << card.suit << endl;
     }
     
-    // Сохраняем карты второго игрока
     file << "Player2:" << player2.size() << endl;
     for (const auto& card : player2) {
         file << card.rank << " " << card.suit << endl;
@@ -30,8 +25,6 @@ bool saveGame(const vector<Card>& player1, const vector<Card>& player2, const st
     cout << "Игра успешно сохранена в файл: " << filename << endl;
     return true;
 }
-
-// Загрузка игры из файла
 bool loadGame(vector<Card>& player1, vector<Card>& player2, const string& filename) {
     ifstream file(filename);
     
@@ -39,15 +32,12 @@ bool loadGame(vector<Card>& player1, vector<Card>& player2, const string& filena
         cout << "Ошибка: не удалось открыть файл для загрузки: " << filename << endl;
         return false;
     }
-    
     player1.clear();
     player2.clear();
-    
     string line;
     bool readingPlayer1 = false;
     bool readingPlayer2 = false;
     int cardsToRead = 0;
-    
     while (getline(file, line)) {
         if (line.empty()) continue;
         
@@ -86,7 +76,6 @@ bool loadGame(vector<Card>& player1, vector<Card>& player2, const string& filena
     return true;
 }
 
-// Сохранение истории ходов в файл
 bool saveTurnHistory(const vector<TurnRecord>& history, const string& filename) {
     ofstream file(filename);
     
