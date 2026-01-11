@@ -1,62 +1,62 @@
-#include "card_game.h"
+п»ї#include "card_game.h"
 #include <iostream>
 #include <iomanip>
 #include <limits>
 using namespace std;
 
-// Вывод меню
+// Р’С‹РІРѕРґ РјРµРЅСЋ
 void menu() {
     cout << "\n";
-    cout << "МЕНЮ: " << endl;
-    cout << "1. Начать новую игру" << endl;
-    cout << "2. Загрузить игру из файла" << endl;
-    cout << "3. Сыграть один ход" << endl;
-    cout << "4. Сыграть до конца игры" << endl;
-    cout << "5. Показать текущее состояние игры" << endl;
-    cout << "6. Сохранить игру в файл" << endl;
-    cout << "7. Показать историю ходов" << endl;
-    cout << "8. Сохранить историю ходов в файл" << endl;
-    cout << "9. Перемешать и перераздать карты" << endl;
-    cout << "10. Выйти из игры" << endl;
+    cout << "РњР•РќР®: " << endl;
+    cout << "1. РќР°С‡Р°С‚СЊ РЅРѕРІСѓСЋ РёРіСЂСѓ" << endl;
+    cout << "2. Р—Р°РіСЂСѓР·РёС‚СЊ РёРіСЂСѓ РёР· С„Р°Р№Р»Р°" << endl;
+    cout << "3. РЎС‹РіСЂР°С‚СЊ РѕРґРёРЅ С…РѕРґ" << endl;
+    cout << "4. РЎС‹РіСЂР°С‚СЊ РґРѕ РєРѕРЅС†Р° РёРіСЂС‹" << endl;
+    cout << "5. РџРѕРєР°Р·Р°С‚СЊ С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹" << endl;
+    cout << "6. РЎРѕС…СЂР°РЅРёС‚СЊ РёРіСЂСѓ РІ С„Р°Р№Р»" << endl;
+    cout << "7. РџРѕРєР°Р·Р°С‚СЊ РёСЃС‚РѕСЂРёСЋ С…РѕРґРѕРІ" << endl;
+    cout << "8. РЎРѕС…СЂР°РЅРёС‚СЊ РёСЃС‚РѕСЂРёСЋ С…РѕРґРѕРІ РІ С„Р°Р№Р»" << endl;
+    cout << "9. РџРµСЂРµРјРµС€Р°С‚СЊ Рё РїРµСЂРµСЂР°Р·РґР°С‚СЊ РєР°СЂС‚С‹" << endl;
+    cout << "10. Р’С‹Р№С‚Рё РёР· РёРіСЂС‹" << endl;
     cout << "\n"; 
-    cout << "Выберите пункт меню (1-10): ";
+    cout << "Р’С‹Р±РµСЂРёС‚Рµ РїСѓРЅРєС‚ РјРµРЅСЋ (1-10): ";
 }
 
-// Вывод карт игрока
+// Р’С‹РІРѕРґ РєР°СЂС‚ РёРіСЂРѕРєР°
 void printCards(const vector<Card>& cards, const string& player_name) {
-    cout << player_name << " (" << cards.size() << " карт): ";
+    cout << player_name << " (" << cards.size() << " РєР°СЂС‚): ";
     
     if (cards.empty()) {
-        cout << "нет карт";
+        cout << "РЅРµС‚ РєР°СЂС‚";
     } else {
-        // Показываем только первые 5 карт для краткости
+        // РџРѕРєР°Р·С‹РІР°РµРј С‚РѕР»СЊРєРѕ РїРµСЂРІС‹Рµ 5 РєР°СЂС‚ РґР»СЏ РєСЂР°С‚РєРѕСЃС‚Рё
         for (size_t i = 0; i < min(cards.size(), static_cast<size_t>(5)); ++i) {
             cout << cardToString(cards[i]) << " ";
         }
         
         if (cards.size() > 5) {
-            cout << "... и ещё " << cards.size() - 5 << " карт";
+            cout << "... Рё РµС‰С‘ " << cards.size() - 5 << " РєР°СЂС‚";
         }
     }
     cout << endl;
 }
 
-// Вывод текущего состояния игры
+// Р’С‹РІРѕРґ С‚РµРєСѓС‰РµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹
 void printGameState(const vector<Card>& player1, const vector<Card>& player2, int turn) {
-    cout << "\n Текущее состояние игры (ход " << turn << ")" << endl;
-    printCards(player1, "Игрок 1");
-    printCards(player2, "Игрок 2");
+    cout << "\n РўРµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ (С…РѕРґ " << turn << ")" << endl;
+    printCards(player1, "РРіСЂРѕРє 1");
+    printCards(player2, "РРіСЂРѕРє 2");
 }
 
-// Вывод истории ходов
+// Р’С‹РІРѕРґ РёСЃС‚РѕСЂРёРё С…РѕРґРѕРІ
 void printTurnHistory(const vector<TurnRecord>& history) {
     if (history.empty()) {
-        cout << "История ходов пуста." << endl;
+        cout << "РСЃС‚РѕСЂРёСЏ С…РѕРґРѕРІ РїСѓСЃС‚Р°." << endl;
         return;
     }
     
-    cout << "\n История ходов" << endl;
-    cout << left << setw(5) << "Ход" << setw(15) << "Карта игрока 1" << setw(15) << "Карта игрока 2" << setw(15) << "Победитель" << setw(15) << "Карт у 1" << setw(15) << "Карт у 2" << endl;
+    cout << "\n РСЃС‚РѕСЂРёСЏ С…РѕРґРѕРІ" << endl;
+    cout << left << setw(5) << "РҐРѕРґ" << setw(15) << "РљР°СЂС‚Р° РёРіСЂРѕРєР° 1" << setw(15) << "РљР°СЂС‚Р° РёРіСЂРѕРєР° 2" << setw(15) << "РџРѕР±РµРґРёС‚РµР»СЊ" << setw(15) << "РљР°СЂС‚ Сѓ 1" << setw(15) << "РљР°СЂС‚ Сѓ 2" << endl;
     cout << string(80, '-') << endl;
     
     for (const auto& record : history) {
@@ -69,7 +69,7 @@ void printTurnHistory(const vector<TurnRecord>& history) {
     }
 }
 
-// Функция для безопасного ввода числа
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ Р±РµР·РѕРїР°СЃРЅРѕРіРѕ РІРІРѕРґР° С‡РёСЃР»Р°
 int getValidatedInput(int min_val, int max_val) {
     int choice;
     while (true) {
@@ -78,7 +78,7 @@ int getValidatedInput(int min_val, int max_val) {
         if (cin.fail() || choice < min_val || choice > max_val) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Ошибка! Введите число от " << min_val << " до " << max_val << ": ";
+            cout << "РћС€РёР±РєР°! Р’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ РѕС‚ " << min_val << " РґРѕ " << max_val << ": ";
         } else {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             return choice;
@@ -86,7 +86,7 @@ int getValidatedInput(int min_val, int max_val) {
     }
 }
 
-// Функция для безопасного ввода строки
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ Р±РµР·РѕРїР°СЃРЅРѕРіРѕ РІРІРѕРґР° СЃС‚СЂРѕРєРё
 string getStringInput() {
     string input;
     getline(cin, input);

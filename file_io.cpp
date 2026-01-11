@@ -1,42 +1,42 @@
-#include "card_game.h"
+п»ї#include "card_game.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
 using namespace std;
 
-// Сохранение игры в файл
+// РЎРѕС…СЂР°РЅРµРЅРёРµ РёРіСЂС‹ РІ С„Р°Р№Р»
 bool saveGame(const vector<Card>& player1, const vector<Card>& player2, const string& filename) {
     ofstream file(filename);
     
     if (!file.is_open()) {
-        cout << "Ошибка: не удалось открыть файл для сохранения: " << filename << endl;
+        cout << "РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ: " << filename << endl;
         return false;
     }
     
-    // Сохраняем карты первого игрока
+    // РЎРѕС…СЂР°РЅСЏРµРј РєР°СЂС‚С‹ РїРµСЂРІРѕРіРѕ РёРіСЂРѕРєР°
     file << "Player1:" << player1.size() << endl;
     for (const auto& card : player1) {
         file << card.rank << " " << card.suit << endl;
     }
     
-    // Сохраняем карты второго игрока
+    // РЎРѕС…СЂР°РЅСЏРµРј РєР°СЂС‚С‹ РІС‚РѕСЂРѕРіРѕ РёРіСЂРѕРєР°
     file << "Player2:" << player2.size() << endl;
     for (const auto& card : player2) {
         file << card.rank << " " << card.suit << endl;
     }
     
     file.close();
-    cout << "Игра успешно сохранена в файл: " << filename << endl;
+    cout << "РРіСЂР° СѓСЃРїРµС€РЅРѕ СЃРѕС…СЂР°РЅРµРЅР° РІ С„Р°Р№Р»: " << filename << endl;
     return true;
 }
 
-// Загрузка игры из файла
+// Р—Р°РіСЂСѓР·РєР° РёРіСЂС‹ РёР· С„Р°Р№Р»Р°
 bool loadGame(vector<Card>& player1, vector<Card>& player2, const string& filename) {
     ifstream file(filename);
     
     if (!file.is_open()) {
-        cout << "Ошибка: не удалось открыть файл для загрузки: " << filename << endl;
+        cout << "РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» РґР»СЏ Р·Р°РіСЂСѓР·РєРё: " << filename << endl;
         return false;
     }
     
@@ -82,26 +82,26 @@ bool loadGame(vector<Card>& player1, vector<Card>& player2, const string& filena
     }
     
     file.close();
-    cout << "Игра успешно загружена из файла: " << filename << endl;
+    cout << "РРіСЂР° СѓСЃРїРµС€РЅРѕ Р·Р°РіСЂСѓР¶РµРЅР° РёР· С„Р°Р№Р»Р°: " << filename << endl;
     return true;
 }
 
-// Сохранение истории ходов в файл
+// РЎРѕС…СЂР°РЅРµРЅРёРµ РёСЃС‚РѕСЂРёРё С…РѕРґРѕРІ РІ С„Р°Р№Р»
 bool saveTurnHistory(const vector<TurnRecord>& history, const string& filename) {
     ofstream file(filename);
     
     if (!file.is_open()) {
-        cout << "Ошибка: не удалось открыть файл для сохранения истории: " << filename << endl;
+        cout << "РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РёСЃС‚РѕСЂРёРё: " << filename << endl;
         return false;
     }
     
-    file << "Номер хода, Карта игрока 1, Карта игрока 2, Победитель, Карт у игрока 1, Карт у игрока 2" << endl;
+    file << "РќРѕРјРµСЂ С…РѕРґР°, РљР°СЂС‚Р° РёРіСЂРѕРєР° 1, РљР°СЂС‚Р° РёРіСЂРѕРєР° 2, РџРѕР±РµРґРёС‚РµР»СЊ, РљР°СЂС‚ Сѓ РёРіСЂРѕРєР° 1, РљР°СЂС‚ Сѓ РёРіСЂРѕРєР° 2" << endl;
     
     for (const auto& record : history) {
         file << record.turn_number << "," << record.player1_card << "," << record.player2_card << "," << record.winner << "," << record.player1_cards_count << ","<< record.player2_cards_count << endl;
     }
     
     file.close();
-    cout << "История ходов сохранена в файл: " << filename << endl;
+    cout << "РСЃС‚РѕСЂРёСЏ С…РѕРґРѕРІ СЃРѕС…СЂР°РЅРµРЅР° РІ С„Р°Р№Р»: " << filename << endl;
     return true;
 }

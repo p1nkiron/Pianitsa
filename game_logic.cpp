@@ -1,4 +1,4 @@
-#include "card_game.h"
+п»ї#include "card_game.h"
 #include <iostream>
 #include <algorithm>
 #include <random>
@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Инициализация колоды из 36 карт
+// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕР»РѕРґС‹ РёР· 36 РєР°СЂС‚
 void initializeDeck(vector<Card>& deck) {
     deck.clear();
     deck.reserve(DECK_SIZE);
@@ -18,13 +18,13 @@ void initializeDeck(vector<Card>& deck) {
     }
 }
 
-// Перемешивание колоды
+// РџРµСЂРµРјРµС€РёРІР°РЅРёРµ РєРѕР»РѕРґС‹
 void shuffleDeck(vector<Card>& deck) {
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     shuffle(deck.begin(), deck.end(), default_random_engine(seed));
 }
 
-// Раздача карт двум игрокам
+// Р Р°Р·РґР°С‡Р° РєР°СЂС‚ РґРІСѓРј РёРіСЂРѕРєР°Рј
 void dealCards(vector<Card>& deck, vector<Card>& player1, vector<Card>& player2) {
     player1.clear();
     player2.clear();
@@ -38,11 +38,11 @@ void dealCards(vector<Card>& deck, vector<Card>& player1, vector<Card>& player2)
     }
 }
 
-// Преобразование карты в строковое представление
+// РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РєР°СЂС‚С‹ РІ СЃС‚СЂРѕРєРѕРІРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ
 string cardToString(const Card& card) {
     string result;
     
-    // Определение достоинства
+    // РћРїСЂРµРґРµР»РµРЅРёРµ РґРѕСЃС‚РѕРёРЅСЃС‚РІР°
     switch(card.rank) {
         case 0: result = "6"; break;
         case 1: result = "7"; break;
@@ -56,113 +56,113 @@ string cardToString(const Card& card) {
         default: result = "?"; break;
     }
     
-    // Добавление масти
+    // Р”РѕР±Р°РІР»РµРЅРёРµ РјР°СЃС‚Рё
     switch(card.suit) {
-        case 0: result += "-черви"; break;
-        case 1: result += "-буби"; break;
-        case 2: result += "-крести"; break;
-        case 3: result += "-пики"; break;
+        case 0: result += "-С‡РµСЂРІРё"; break;
+        case 1: result += "-Р±СѓР±Рё"; break;
+        case 2: result += "-РєСЂРµСЃС‚Рё"; break;
+        case 3: result += "-РїРёРєРё"; break;
         default: result += "?"; break;
     }
     
     return result;
 }
 
-// Сравнение двух карт
+// РЎСЂР°РІРЅРµРЅРёРµ РґРІСѓС… РєР°СЂС‚
 int compareCards(const Card& card1, const Card& card2) {
-    // Сначала сравниваем достоинства
+    // РЎРЅР°С‡Р°Р»Р° СЃСЂР°РІРЅРёРІР°РµРј РґРѕСЃС‚РѕРёРЅСЃС‚РІР°
     if (card1.rank > card2.rank) {
-        return 1; // Первая карта сильнее
+        return 1; // РџРµСЂРІР°СЏ РєР°СЂС‚Р° СЃРёР»СЊРЅРµРµ
     } else if (card1.rank < card2.rank) {
-        return -1; // Вторая карта сильнее
+        return -1; // Р’С‚РѕСЂР°СЏ РєР°СЂС‚Р° СЃРёР»СЊРЅРµРµ
     } else {
-        // При равных достоинствах сравниваем масти
-        // В "пьянице" обычно масть не имеет значения, но для полноты реализуем
+        // РџСЂРё СЂР°РІРЅС‹С… РґРѕСЃС‚РѕРёРЅСЃС‚РІР°С… СЃСЂР°РІРЅРёРІР°РµРј РјР°СЃС‚Рё
+        // Р’ "РїСЊСЏРЅРёС†Рµ" РѕР±С‹С‡РЅРѕ РјР°СЃС‚СЊ РЅРµ РёРјРµРµС‚ Р·РЅР°С‡РµРЅРёСЏ, РЅРѕ РґР»СЏ РїРѕР»РЅРѕС‚С‹ СЂРµР°Р»РёР·СѓРµРј
         if (card1.suit > card2.suit) {
             return 1;
         } else if (card1.suit < card2.suit) {
             return -1;
         }
-        return 0; // Ничья (в теории не должно происходить)
+        return 0; // РќРёС‡СЊСЏ (РІ С‚РµРѕСЂРёРё РЅРµ РґРѕР»Р¶РЅРѕ РїСЂРѕРёСЃС…РѕРґРёС‚СЊ)
     }
 }
 
-// Выполнение одного хода
+// Р’С‹РїРѕР»РЅРµРЅРёРµ РѕРґРЅРѕРіРѕ С…РѕРґР°
 void playTurn(vector<Card>& player1, vector<Card>& player2, vector<Card>& table, TurnRecord& record, int turn) {
     
-    // Проверка, что у игроков есть карты
+    // РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ Сѓ РёРіСЂРѕРєРѕРІ РµСЃС‚СЊ РєР°СЂС‚С‹
     if (player1.empty() || player2.empty()) {
         return;
     }
     
-    // Берем верхние карты
+    // Р‘РµСЂРµРј РІРµСЂС…РЅРёРµ РєР°СЂС‚С‹
     Card card1 = player1.front();
     Card card2 = player2.front();
     
-    // Удаляем карты из рук игроков
+    // РЈРґР°Р»СЏРµРј РєР°СЂС‚С‹ РёР· СЂСѓРє РёРіСЂРѕРєРѕРІ
     player1.erase(player1.begin());
     player2.erase(player2.begin());
     
-    // Кладем карты на стол
+    // РљР»Р°РґРµРј РєР°СЂС‚С‹ РЅР° СЃС‚РѕР»
     table.push_back(card1);
     table.push_back(card2);
     
-    // Заполняем запись о ходе
+    // Р—Р°РїРѕР»РЅСЏРµРј Р·Р°РїРёСЃСЊ Рѕ С…РѕРґРµ
     record.turn_number = turn;
     record.player1_card = cardToString(card1);
     record.player2_card = cardToString(card2);
     record.player1_cards_count = player1.size();
     record.player2_cards_count = player2.size();
     
-    // Сравниваем карты
+    // РЎСЂР°РІРЅРёРІР°РµРј РєР°СЂС‚С‹
     int result = compareCards(card1, card2);
     
     if (result > 0) {
-        // Первый игрок выиграл ход
-        record.winner = "Игрок 1";
-        // Перемещаем все карты со стола в конец колоды первого игрока
+        // РџРµСЂРІС‹Р№ РёРіСЂРѕРє РІС‹РёРіСЂР°Р» С…РѕРґ
+        record.winner = "РРіСЂРѕРє 1";
+        // РџРµСЂРµРјРµС‰Р°РµРј РІСЃРµ РєР°СЂС‚С‹ СЃРѕ СЃС‚РѕР»Р° РІ РєРѕРЅРµС† РєРѕР»РѕРґС‹ РїРµСЂРІРѕРіРѕ РёРіСЂРѕРєР°
         takeAllCards(player1, table);
     } else if (result < 0) {
-        // Второй игрок выиграл ход
-        record.winner = "Игрок 2";
-        // Перемещаем все карты со стола в конец колоды второго игрока
+        // Р’С‚РѕСЂРѕР№ РёРіСЂРѕРє РІС‹РёРіСЂР°Р» С…РѕРґ
+        record.winner = "РРіСЂРѕРє 2";
+        // РџРµСЂРµРјРµС‰Р°РµРј РІСЃРµ РєР°СЂС‚С‹ СЃРѕ СЃС‚РѕР»Р° РІ РєРѕРЅРµС† РєРѕР»РѕРґС‹ РІС‚РѕСЂРѕРіРѕ РёРіСЂРѕРєР°
         takeAllCards(player2, table);
     } else {
-        // Спор - карты равны, оставляем на столе для следующего хода
-        record.winner = "Спор (ничья)";
+        // РЎРїРѕСЂ - РєР°СЂС‚С‹ СЂР°РІРЅС‹, РѕСЃС‚Р°РІР»СЏРµРј РЅР° СЃС‚РѕР»Рµ РґР»СЏ СЃР»РµРґСѓСЋС‰РµРіРѕ С…РѕРґР°
+        record.winner = "РЎРїРѕСЂ (РЅРёС‡СЊСЏ)";
     }
 }
 
-// Забрать все карты со стола
+// Р—Р°Р±СЂР°С‚СЊ РІСЃРµ РєР°СЂС‚С‹ СЃРѕ СЃС‚РѕР»Р°
 void takeAllCards(vector<Card>& winner, vector<Card>& table) {
-    // Перемешиваем карты на столе перед добавлением (по правилам)
+    // РџРµСЂРµРјРµС€РёРІР°РµРј РєР°СЂС‚С‹ РЅР° СЃС‚РѕР»Рµ РїРµСЂРµРґ РґРѕР±Р°РІР»РµРЅРёРµРј (РїРѕ РїСЂР°РІРёР»Р°Рј)
     shuffleDeck(table);
-    // Добавляем карты в конец колоды победителя
+    // Р”РѕР±Р°РІР»СЏРµРј РєР°СЂС‚С‹ РІ РєРѕРЅРµС† РєРѕР»РѕРґС‹ РїРѕР±РµРґРёС‚РµР»СЏ
     winner.insert(winner.end(), table.begin(), table.end());
     table.clear();
 }
 
-// Проверка окончания игры
+// РџСЂРѕРІРµСЂРєР° РѕРєРѕРЅС‡Р°РЅРёСЏ РёРіСЂС‹
 bool checkGameEnd(const vector<Card>& player1, const vector<Card>& player2, int turns) {
     if (player1.empty()) {
-        cout << "\n=== Игрок 2 победил! У игрока 1 закончились карты. ===" << endl;
+        cout << "\n=== РРіСЂРѕРє 2 РїРѕР±РµРґРёР»! РЈ РёРіСЂРѕРєР° 1 Р·Р°РєРѕРЅС‡РёР»РёСЃСЊ РєР°СЂС‚С‹. ===" << endl;
         return true;
     }
     
     if (player2.empty()) {
-        cout << "\n=== Игрок 1 победил! У игрока 2 закончились карты. ===" << endl;
+        cout << "\n=== РРіСЂРѕРє 1 РїРѕР±РµРґРёР»! РЈ РёРіСЂРѕРєР° 2 Р·Р°РєРѕРЅС‡РёР»РёСЃСЊ РєР°СЂС‚С‹. ===" << endl;
         return true;
     }
     
     if (turns >= MAX_TURNS) {
-        cout << "\n=== Игра завершена по достижении максимального количества ходов (" 
+        cout << "\n=== РРіСЂР° Р·Р°РІРµСЂС€РµРЅР° РїРѕ РґРѕСЃС‚РёР¶РµРЅРёРё РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° С…РѕРґРѕРІ (" 
              << MAX_TURNS << "). ===" << endl;
         if (player1.size() > player2.size()) {
-            cout << "=== Игрок 1 победил по количеству карт! ===" << endl;
+            cout << "=== РРіСЂРѕРє 1 РїРѕР±РµРґРёР» РїРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ РєР°СЂС‚! ===" << endl;
         } else if (player2.size() > player1.size()) {
-            cout << "=== Игрок 2 победил по количеству карт! ===" << endl;
+            cout << "=== РРіСЂРѕРє 2 РїРѕР±РµРґРёР» РїРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ РєР°СЂС‚! ===" << endl;
         } else {
-            cout << "=== Ничья! ===" << endl;
+            cout << "=== РќРёС‡СЊСЏ! ===" << endl;
         }
         return true;
     }

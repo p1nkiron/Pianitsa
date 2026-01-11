@@ -1,11 +1,11 @@
-#include "card_game.h"
+п»ї#include "card_game.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <windows.h>
 using namespace std;
 
-// Глобальные переменные для состояния игры
+// Р“Р»РѕР±Р°Р»СЊРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹
 vector<Card> player1_cards;
 vector<Card> player2_cards;
 vector<Card> table_cards;
@@ -13,14 +13,14 @@ vector<TurnRecord> turn_history;
 int current_turn = 0;
 bool game_active = false;
 
-// Прототипы функций из interface.cpp
+// РџСЂРѕС‚РѕС‚РёРїС‹ С„СѓРЅРєС†РёР№ РёР· interface.cpp
 void menu();
 void printGameState(const vector<Card>& player1, const vector<Card>& player2, int turn);
 void printTurnHistory(const vector<TurnRecord>& history);
 int getValidatedInput(int min_val, int max_val);
 string getStringInput();
 
-// Инициализация новой игры
+// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РЅРѕРІРѕР№ РёРіСЂС‹
 void initializeNewGame() {
     vector<Card> deck;
     
@@ -33,19 +33,19 @@ void initializeNewGame() {
     current_turn = 0;
     game_active = true;
     
-    cout << "\nНовая игра начата!" << endl;
+    cout << "\nРќРѕРІР°СЏ РёРіСЂР° РЅР°С‡Р°С‚Р°!" << endl;
     printGameState(player1_cards, player2_cards, current_turn);
 }
 
-// Выполнение одного хода с интерфейсом
+// Р’С‹РїРѕР»РЅРµРЅРёРµ РѕРґРЅРѕРіРѕ С…РѕРґР° СЃ РёРЅС‚РµСЂС„РµР№СЃРѕРј
 void executeSingleTurn() {
     if (!game_active) {
-        cout << "\nОшибка: игра не активна. Начните новую игру или загрузите существующую." << endl;
+        cout << "\nРћС€РёР±РєР°: РёРіСЂР° РЅРµ Р°РєС‚РёРІРЅР°. РќР°С‡РЅРёС‚Рµ РЅРѕРІСѓСЋ РёРіСЂСѓ РёР»Рё Р·Р°РіСЂСѓР·РёС‚Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰СѓСЋ." << endl;
         return;
     }
     
     if (player1_cards.empty() || player2_cards.empty()) {
-        cout << "\nИгра уже завершена. Начните новую игру." << endl;
+        cout << "\nРРіСЂР° СѓР¶Рµ Р·Р°РІРµСЂС€РµРЅР°. РќР°С‡РЅРёС‚Рµ РЅРѕРІСѓСЋ РёРіСЂСѓ." << endl;
         return;
     }
     
@@ -55,35 +55,35 @@ void executeSingleTurn() {
     playTurn(player1_cards, player2_cards, table_cards, record, current_turn);
     turn_history.push_back(record);
     
-    cout << "\n Ход " << current_turn << endl;
-    cout << "Игрок 1 выложил: " << record.player1_card << endl;
-    cout << "Игрок 2 выложил: " << record.player2_card << endl;
-    cout << "Победитель хода: " << record.winner << endl;
-    cout << "Карт на столе: " << table_cards.size() << endl;
+    cout << "\n РҐРѕРґ " << current_turn << endl;
+    cout << "РРіСЂРѕРє 1 РІС‹Р»РѕР¶РёР»: " << record.player1_card << endl;
+    cout << "РРіСЂРѕРє 2 РІС‹Р»РѕР¶РёР»: " << record.player2_card << endl;
+    cout << "РџРѕР±РµРґРёС‚РµР»СЊ С…РѕРґР°: " << record.winner << endl;
+    cout << "РљР°СЂС‚ РЅР° СЃС‚РѕР»Рµ: " << table_cards.size() << endl;
     
     printGameState(player1_cards, player2_cards, current_turn);
     
-    // Проверка окончания игры
+    // РџСЂРѕРІРµСЂРєР° РѕРєРѕРЅС‡Р°РЅРёСЏ РёРіСЂС‹
     if (checkGameEnd(player1_cards, player2_cards, current_turn)) {
         game_active = false;
     }
 }
 
-// Игра до завершения
+// РРіСЂР° РґРѕ Р·Р°РІРµСЂС€РµРЅРёСЏ
 void playToEnd() {
     if (!game_active) {
-        cout << "\nОшибка: игра не активна. Начните новую игру или загрузите существующую." << endl;
+        cout << "\nРћС€РёР±РєР°: РёРіСЂР° РЅРµ Р°РєС‚РёРІРЅР°. РќР°С‡РЅРёС‚Рµ РЅРѕРІСѓСЋ РёРіСЂСѓ РёР»Рё Р·Р°РіСЂСѓР·РёС‚Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰СѓСЋ." << endl;
         return;
     }
     
-    cout << "\nИграем до завершения игры..." << endl;
+    cout << "\nРРіСЂР°РµРј РґРѕ Р·Р°РІРµСЂС€РµРЅРёСЏ РёРіСЂС‹..." << endl;
     
     while (game_active && !checkGameEnd(player1_cards, player2_cards, current_turn)) {
         executeSingleTurn();
         
-        // Ограничиваем вывод каждого хода для больших игр
+        // РћРіСЂР°РЅРёС‡РёРІР°РµРј РІС‹РІРѕРґ РєР°Р¶РґРѕРіРѕ С…РѕРґР° РґР»СЏ Р±РѕР»СЊС€РёС… РёРіСЂ
         if (current_turn % 10 == 0 && current_turn > 0) {
-            cout << "\nСыграно " << current_turn << " ходов. Продолжить автоматическую игру? (y/n): ";
+            cout << "\nРЎС‹РіСЂР°РЅРѕ " << current_turn << " С…РѕРґРѕРІ. РџСЂРѕРґРѕР»Р¶РёС‚СЊ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєСѓСЋ РёРіСЂСѓ? (y/n): ";
             char choice;
             cin >> choice;
             cin.ignore();
@@ -94,24 +94,24 @@ void playToEnd() {
     }
 }
 
-// Основная функция
+// РћСЃРЅРѕРІРЅР°СЏ С„СѓРЅРєС†РёСЏ
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
-    cout << "Добро пожаловать в симулятор карточной игры 'Пьяница'!" << endl;
+    cout << "Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ СЃРёРјСѓР»СЏС‚РѕСЂ РєР°СЂС‚РѕС‡РЅРѕР№ РёРіСЂС‹ 'РџСЊСЏРЅРёС†Р°'!" << endl;
     bool running = true;
     while (running) {
         menu();
         int choice = getValidatedInput(1, 10);
         
         switch (choice) {
-            case 1: // Новая игра
+            case 1: // РќРѕРІР°СЏ РёРіСЂР°
                 initializeNewGame();
                 break;
                 
-            case 2: // Загрузить игру
+            case 2: // Р—Р°РіСЂСѓР·РёС‚СЊ РёРіСЂСѓ
                 {
-                    cout << "Введите имя файла для загрузки: ";
+                    cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ С„Р°Р№Р»Р° РґР»СЏ Р·Р°РіСЂСѓР·РєРё: ";
                     string filename = getStringInput();
                     if (loadGame(player1_cards, player2_cards, filename)) {
                         game_active = true;
@@ -123,50 +123,50 @@ int main() {
                 }
                 break;
                 
-            case 3: // Сыграть один ход
+            case 3: // РЎС‹РіСЂР°С‚СЊ РѕРґРёРЅ С…РѕРґ
                 executeSingleTurn();
                 break;
                 
-            case 4: // Сыграть до конца
+            case 4: // РЎС‹РіСЂР°С‚СЊ РґРѕ РєРѕРЅС†Р°
                 playToEnd();
                 break;
                 
-            case 5: // Показать состояние
+            case 5: // РџРѕРєР°Р·Р°С‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ
                 if (game_active) {
                     printGameState(player1_cards, player2_cards, current_turn);
                 } else {
-                    cout << "\nИгра не активна. Начните новую игру или загрузите существующую." << endl;
+                    cout << "\nРРіСЂР° РЅРµ Р°РєС‚РёРІРЅР°. РќР°С‡РЅРёС‚Рµ РЅРѕРІСѓСЋ РёРіСЂСѓ РёР»Рё Р·Р°РіСЂСѓР·РёС‚Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰СѓСЋ." << endl;
                 }
                 break;
                 
-            case 6: // Сохранить игру
+            case 6: // РЎРѕС…СЂР°РЅРёС‚СЊ РёРіСЂСѓ
                 if (game_active) {
-                    cout << "Введите имя файла для сохранения: ";
+                    cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ С„Р°Р№Р»Р° РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ: ";
                     string filename = getStringInput();
                     saveGame(player1_cards, player2_cards, filename);
                 } else {
-                    cout << "\nНет активной игры для сохранения." << endl;
+                    cout << "\nРќРµС‚ Р°РєС‚РёРІРЅРѕР№ РёРіСЂС‹ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ." << endl;
                 }
                 break;
                 
-            case 7: // Показать историю
+            case 7: // РџРѕРєР°Р·Р°С‚СЊ РёСЃС‚РѕСЂРёСЋ
                 printTurnHistory(turn_history);
                 break;
                 
-            case 8: // Сохранить историю
+            case 8: // РЎРѕС…СЂР°РЅРёС‚СЊ РёСЃС‚РѕСЂРёСЋ
                 if (!turn_history.empty()) {
-                    cout << "Введите имя файла для сохранения истории: ";
+                    cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ С„Р°Р№Р»Р° РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РёСЃС‚РѕСЂРёРё: ";
                     string filename = getStringInput();
                     saveTurnHistory(turn_history, filename);
                 } else {
-                    cout << "\nИстория ходов пуста." << endl;
+                    cout << "\nРСЃС‚РѕСЂРёСЏ С…РѕРґРѕРІ РїСѓСЃС‚Р°." << endl;
                 }
                 break;
                 
-            case 9: // Перераздать карты
+            case 9: // РџРµСЂРµСЂР°Р·РґР°С‚СЊ РєР°СЂС‚С‹
                 if (game_active) {
                     char confirm;
-                    cout << "\nВы уверены, что хотите перемешать и перераздать карты? (y/n): ";
+                    cout << "\nР’С‹ СѓРІРµСЂРµРЅС‹, С‡С‚Рѕ С…РѕС‚РёС‚Рµ РїРµСЂРµРјРµС€Р°С‚СЊ Рё РїРµСЂРµСЂР°Р·РґР°С‚СЊ РєР°СЂС‚С‹? (y/n): ";
                     cin >> confirm;
                     cin.ignore();
                     if (confirm == 'y' || confirm == 'Y') {
@@ -177,13 +177,13 @@ int main() {
                 }
                 break;
                 
-            case 10: // Выход
-                cout << "\nСпасибо за игру! До свидания!" << endl;
+            case 10: // Р’С‹С…РѕРґ
+                cout << "\nРЎРїР°СЃРёР±Рѕ Р·Р° РёРіСЂСѓ! Р”Рѕ СЃРІРёРґР°РЅРёСЏ!" << endl;
                 running = false;
                 break;
                 
             default:
-                cout << "\nНеверный выбор. Попробуйте снова." << endl;
+                cout << "\nРќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << endl;
         }
     }
     
